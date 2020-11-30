@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.tasks.OnCompleteListener
@@ -23,8 +25,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val logout = findViewById<Button>(R.id.logout)
         logout.setOnClickListener(this)
+
+        val save = findViewById<Button>(R.id.save)
         save.setOnClickListener(this)
+
+        val showdata = findViewById<Button>(R.id.showdata)
         showdata.setOnClickListener(this)
 
         auth = FirebaseAuth.getInstance()
@@ -39,6 +46,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.save -> {
                 val getUserID = auth!!.currentUser!!.uid
                 val database = FirebaseDatabase.getInstance()
+
+
+//                tambahan
+                var nim = findViewById<EditText>(R.id.nim)
+                var nama = findViewById<EditText>(R.id.nama)
+                var jurusan = findViewById<EditText>(R.id.jurusan)
 
                 val getNIM: String = nim.getText().toString()
                 val getNama: String = nama.getText().toString()
@@ -73,7 +86,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                                 finish()
                             }
                         })
-            R.id.showdata ->{
+            R.id.showdata -> {
+                startActivity(Intent(this@MainActivity, MyListData::class.java))
             }
         }
     }
